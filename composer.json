@@ -1,0 +1,25 @@
+{
+    "name": "chteuchteu/symfony-exceptions-2-gitlab-issues-bundle",
+    "description": "Creates & updates issues on a GitLab repository from Symfony2 exceptions",
+    "homepage": "https://github.com/chteuchteu/SymfonyExceptions2GitLabIssuesBundle",
+    "license": "GNU GPL2",
+    "authors": [
+        {
+            "name": "Quentin Stoeckel",
+            "email": "stoeckel.quentin@gmail.com"
+        }
+    ],
+    "keywords": [
+        "symfony2", "exceptions", "gitlab", "issues"
+    ],
+    "require": {
+        "php": "^5.4|^7.0",
+        "symfony/symfony": ">=2.1.0",
+        "m4tthumphrey/php-gitlab-api": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chteuchteu\\SymExc2GtlbIsuBndle\\":"src/"
+        }
+    }
+}
