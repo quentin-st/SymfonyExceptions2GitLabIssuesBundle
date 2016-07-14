@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Chteuchteu\\SymExc2GtlbIsuBndle\\":"src/"
+            "Chteuchteu\\SymExc2GtlbIsuBndle\\": ""
         }
     }
 }
