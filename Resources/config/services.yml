@@ -2,9 +2,10 @@ services:
     sym_exc_2_gtlb_isu_bndle.exc_logr:
         class: Chteuchteu\SymExc2GtlbIsuBndle\Service\ExceptionLoggingService
         arguments:
-            gitLabAPIUrl: %gitlab_api_url%
-            token: %gitlab_token%
-            project: %project%
-            twig: @twig
+            gitLabAPIUrl: "%sym_exc_2_gtlb_isu_bndle.gitlab_api_url%"
+            token: "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
+            project: "%sym_exc_2_gtlb_isu_bndle.project%"
+            tokenStorage: "@security.token_storage"
+            twig: "@twig"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: logException, priority: 200 }

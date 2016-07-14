@@ -1,4 +1,6 @@
+{% if title|length > issueTitleMaxLength %}
 *{{ title }}*
+{% endif %}
 
 `[{{ request.method }}] {{ request.requestUri }}`
 
@@ -11,5 +13,5 @@ Exception in *{{ file }}* on line *{{ line }}*.
 > {{ message }}
 
 ```
-{{ stacktrace }}
+{{ stacktrace|raw }}
 ```
