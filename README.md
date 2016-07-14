@@ -18,4 +18,5 @@ when an exception is thrown:
 - Make more things configurable:
    - Issue body template
    - Comment datetime format?
+   - Environments
 - Handle pagination when finding issue

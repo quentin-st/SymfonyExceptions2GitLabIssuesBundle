@@ -7,5 +7,6 @@ services:
             project: "%sym_exc_2_gtlb_isu_bndle.project%"
             tokenStorage: "@security.token_storage"
             twig: "@twig"
+            env: "%kernel.environment%"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: logException, priority: 200 }

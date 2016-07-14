@@ -15,6 +15,7 @@ class ExceptionLoggingService
     const CommentRegex = "/^Thrown (\\d*) times?, last one was (.*)$/";
     const UnknownLoggedInUser = "None";
     const IssueTitleMaxLength = 256;
+    const ExcludedEnvironments = ['dev'];
 
     /**
      * GitLab's API URL, defaults to hosted
@@ -43,6 +44,9 @@ class ExceptionLoggingService
     /** @var Client */
     private $gitLab;
 
+    /** @var string */
+    private $env;
+
     /**
      * GitLabHandler constructor.
      * @param string $gitlabAPIUrl GitLab's API URL
@@ -50,16 +54,20 @@ class ExceptionLoggingService
      * @param bool $project GitLab repository name or id
      * @param \Twig_Environment $twig
      */
-    public function __construct($gitlabAPIUrl, $token, $project, $tokenStorage, \Twig_Environment $twig)
+    public function __construct($gitlabAPIUrl, $token, $project, $tokenStorage, \Twig_Environment $twig, $env)
     {
         $this->token = $token;
         $this->project = $project;
         $this->gitLabAPIUrl = $gitlabAPIUrl;
         $this->twig = $twig;
+        $this->env = $env;
     }
 
     public function logException(GetResponseForExceptionEvent $event)
     {
+        if (in_array($this->env, self::ExcludedEnvironments))
+            return;
+
         // Connect to GitLab's API
         $this->gitLab = new Client($this->gitLabAPIUrl);
         $this->gitLab->authenticate($this->token, Client::AUTH_URL_TOKEN);
