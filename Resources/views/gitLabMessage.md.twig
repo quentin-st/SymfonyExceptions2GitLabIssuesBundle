@@ -1,0 +1,15 @@
+*{{ title }}*
+
+`[{{ request.method }}] {{ request.requestUri }}`
+
+{% if user is not empty %}
+Logged-in user: {{ user }}
+{% endif %}
+
+Exception in *{{ file }}* on line *{{ line }}*.
+
+> {{ message }}
+
+```
+{{ stacktrace }}
+```
