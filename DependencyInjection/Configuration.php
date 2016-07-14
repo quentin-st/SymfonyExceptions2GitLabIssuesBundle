@@ -2,6 +2,7 @@
 
 namespace Chteuchteu\SymExc2GtlbIsuBndle\DependencyInjection;
 
+use Chteuchteu\SymExc2GtlbIsuBndle\SymfonyExceptions2GitLabIssuesBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -10,7 +11,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('sym_exc_2_gtlb_isu_bndle');
+        $rootNode = $treeBuilder->root(SymfonyExceptions2GitLabIssuesBundle::DI_Alias);
 
         $rootNode
             ->children()
