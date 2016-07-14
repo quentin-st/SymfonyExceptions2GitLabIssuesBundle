@@ -120,7 +120,7 @@ class ExceptionLoggingService
         $replacements = [
             '/{count}/' => $count,
             '/{plural}/' => $count > 1 ? 's' : '',
-            '/{datetime}/' => (new \DateTime())->format('d/m/Y h:i:s')
+            '/{datetime}/' => (new \DateTime())->format('d/m/Y H:i:s')
         ];
 
         return preg_replace(array_keys($replacements), array_values($replacements), self::CommentPattern);
