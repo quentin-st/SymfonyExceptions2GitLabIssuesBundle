@@ -5,6 +5,7 @@ services:
             gitLabAPIUrl: "%sym_exc_2_gtlb_isu_bndle.gitlab_api_url%"
             token: "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
             project: "%sym_exc_2_gtlb_isu_bndle.project%"
+            excludedEnvironments: "%sym_exc_2_gtlb_isu_bndle.excluded_environments%"
             tokenStorage: "@security.token_storage"
             twig: "@twig"
             env: "%kernel.environment%"

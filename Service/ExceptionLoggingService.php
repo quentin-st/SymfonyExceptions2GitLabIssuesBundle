@@ -15,7 +15,6 @@ class ExceptionLoggingService
     const CommentRegex = "/^Thrown (\\d*) times?, last one was (.*)$/";
     const UnknownLoggedInUser = "None";
     const IssueTitleMaxLength = 256;
-    const ExcludedEnvironments = ['dev'];
 
     /**
      * GitLab's API URL, defaults to hosted
@@ -35,17 +34,22 @@ class ExceptionLoggingService
      */
     private $project;
 
-    /** @var \Twig_Environment */
-    private $twig;
+    /** @var array */
+    private $excludedEnvironments;
+
 
     /** @var TokenStorage */
     private $tokenStorage;
 
-    /** @var Client */
-    private $gitLab;
+    /** @var \Twig_Environment */
+    private $twig;
 
     /** @var string */
     private $env;
+
+
+    /** @var Client */
+    private $gitLab;
 
     /**
      * GitLabHandler constructor.
@@ -54,18 +58,22 @@ class ExceptionLoggingService
      * @param bool $project GitLab repository name or id
      * @param \Twig_Environment $twig
      */
-    public function __construct($gitlabAPIUrl, $token, $project, $tokenStorage, \Twig_Environment $twig, $env)
+    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments,
+                                $tokenStorage, \Twig_Environment $twig, $env)
     {
+        $this->gitLabAPIUrl = $gitlabAPIUrl;
         $this->token = $token;
         $this->project = $project;
-        $this->gitLabAPIUrl = $gitlabAPIUrl;
+        $this->excludedEnvironments = $excludedEnvironments;
+
         $this->twig = $twig;
         $this->env = $env;
     }
 
     public function logException(GetResponseForExceptionEvent $event)
     {
-        if (in_array($this->env, self::ExcludedEnvironments))
+        // Handle excluded environments
+        if (in_array($this->env, $this->excludedEnvironments))
             return;
 
         // Connect to GitLab's API

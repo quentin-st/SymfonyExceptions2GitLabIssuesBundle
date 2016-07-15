@@ -26,6 +26,10 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->defaultNull()
                 ->end()
+                ->arrayNode('excluded_environments')
+                    ->prototype('scalar')->end()
+                    ->defaultValue(['dev'])
+                ->end()
             ->end()
         ;
 

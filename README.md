@@ -28,8 +28,8 @@ when an exception is thrown:
             );
         }
 
-3. Generate a GitLab API token. Navigate to [https://gitlab.com/profile](https://gitlab.com/profile) (replace the URL with,
-your instance's if necessary, but don't miss the `/profile`), then "Personal Access Tokens".
+3. Generate a GitLab API token. Navigate to [https://gitlab.com/profile](https://gitlab.com/profile) (replace the URL with
+your instance's if necessary, but don't miss the `/profile` part), then "Personal Access Tokens".
 
     You can name it whatever you want, but "SymfonyExceptions2GitLabIssuesBundle" seems to be a great name.
     
@@ -47,12 +47,18 @@ your instance's if necessary, but don't miss the `/profile`), then "Personal Acc
 
 5. Deploy your app in production, and trigger an exception. An issue should be waiting for you in your GitLab repository.
 
+## Configuration
+Here are some more things you can configure. Just add these items to your `config.yml`, under the `sym_exc_2_gtlb_isu_bndle`
+node.
+
+- `excluded_environments` - array, default `['dev']`:
+
+    When encountering an exception in one of these environments, we won't report anything to your GitLab repository. 
+
 ## TODO
 - Make more things configurable:
    - Issue body template
    - Comment datetime format?
-   - Environments
-   - Test mode
    - Exclude some exceptions (404, ...)
 - Handle pagination when finding issue
 - Test mode
