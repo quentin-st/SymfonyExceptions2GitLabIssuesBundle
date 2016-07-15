@@ -15,3 +15,8 @@ Exception in *[{{ file ~ '#' ~ line }}]({{ file ~ '#' ~ line }})*.
 ```
 {{ stacktrace|raw }}
 ```
+
+{% if mentions|length > 0 %}
+---
+*Mentions:{% for mention in mentions %} @{{ mention }}{% endfor %}*
+{% endif %}

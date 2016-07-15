@@ -24,6 +24,7 @@ class SymfonyExceptions2GitLabIssuesExtension extends Extension
         $container->setParameter($this->getAlias().'.gitlab_token', $config['gitlab_token']);
         $container->setParameter($this->getAlias().'.project', $config['project']);
         $container->setParameter($this->getAlias().'.excluded_environments', $config['excluded_environments']);
+        $container->setParameter($this->getAlias().'.mentions', $config['mentions']);
     }
 
     public function getAlias()

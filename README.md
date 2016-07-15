@@ -53,7 +53,14 @@ node.
 
 - `excluded_environments` - array, default `['dev']`:
 
-    When encountering an exception in one of these environments, we won't report anything to your GitLab repository. 
+    When encountering an exception in one of these environments, we won't report anything to your GitLab repository.
+     
+     > Tip: include back the dev environment (`excluded_environments: []`) to test this bundle without deploying to prod!
+
+- `mentions` - array, default `[]`:
+
+    GitLab users to be mentioned in the issue body. Example: `['user1', 'user2', 'user3']` will append "Mentions: @user1 @user2 @user3"
+    at the end of the issue body.
 
 ## TODO
 - Make more things configurable:

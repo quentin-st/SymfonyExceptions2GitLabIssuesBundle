@@ -30,6 +30,10 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(['dev'])
                 ->end()
+                ->arrayNode('mentions')
+                    ->prototype('scalar')->end()
+                    ->defaultValue([])
+                ->end()
             ->end()
         ;
 

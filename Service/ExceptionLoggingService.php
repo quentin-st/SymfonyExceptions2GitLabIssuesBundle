@@ -37,6 +37,9 @@ class ExceptionLoggingService
     /** @var array */
     private $excludedEnvironments;
 
+    /** @var array */
+    private $mentions;
+
 
     /** @var TokenStorage */
     private $tokenStorage;
@@ -56,15 +59,20 @@ class ExceptionLoggingService
      * @param string $gitlabAPIUrl GitLab's API URL
      * @param int $token GitLab API token
      * @param bool $project GitLab repository name or id
+     * @param array $excludedEnvironments
+     * @param array $mentions
+     * @param TokenStorage $tokenStorage
      * @param \Twig_Environment $twig
+     * @param string $env
      */
-    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments,
+    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments, $mentions,
                                 $tokenStorage, \Twig_Environment $twig, $env)
     {
         $this->gitLabAPIUrl = $gitlabAPIUrl;
         $this->token = $token;
         $this->project = $project;
         $this->excludedEnvironments = $excludedEnvironments;
+        $this->mentions = $mentions;
 
         $this->twig = $twig;
         $this->env = $env;
@@ -160,7 +168,8 @@ class ExceptionLoggingService
     private function getIssueBody(array $exceptionInfos)
     {
         return $this->twig->render('@SymfonyExceptions2GitLabIssues/gitLabMessage.md.twig', array_merge($exceptionInfos, [
-            'issueTitleMaxLength' => self::IssueTitleMaxLength
+            'issueTitleMaxLength' => self::IssueTitleMaxLength,
+            'mentions' => $this->mentions
         ]));
     }
 

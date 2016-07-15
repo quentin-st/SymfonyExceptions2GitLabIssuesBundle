@@ -6,6 +6,7 @@ services:
             token: "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
             project: "%sym_exc_2_gtlb_isu_bndle.project%"
             excludedEnvironments: "%sym_exc_2_gtlb_isu_bndle.excluded_environments%"
+            mentions: "%sym_exc_2_gtlb_isu_bndle.mentions%"
             tokenStorage: "@security.token_storage"
             twig: "@twig"
             env: "%kernel.environment%"
