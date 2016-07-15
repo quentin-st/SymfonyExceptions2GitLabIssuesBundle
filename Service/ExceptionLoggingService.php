@@ -38,6 +38,9 @@ class ExceptionLoggingService
     private $excludedEnvironments;
 
     /** @var array */
+    private $excludedExceptions;
+
+    /** @var array */
     private $mentions;
 
 
@@ -60,18 +63,20 @@ class ExceptionLoggingService
      * @param int $token GitLab API token
      * @param bool $project GitLab repository name or id
      * @param array $excludedEnvironments
+     * @param array $excludedExceptions
      * @param array $mentions
      * @param TokenStorage $tokenStorage
      * @param \Twig_Environment $twig
      * @param string $env
      */
-    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments, $mentions,
+    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments, $excludedExceptions, $mentions,
                                 $tokenStorage, \Twig_Environment $twig, $env)
     {
         $this->gitLabAPIUrl = $gitlabAPIUrl;
         $this->token = $token;
         $this->project = $project;
         $this->excludedEnvironments = $excludedEnvironments;
+        $this->excludedExceptions = $excludedExceptions;
         $this->mentions = $mentions;
 
         $this->twig = $twig;
@@ -82,6 +87,10 @@ class ExceptionLoggingService
     {
         // Handle excluded environments
         if (in_array($this->env, $this->excludedEnvironments))
+            return;
+
+        // Handle excluded exceptions
+        if (in_array(get_class($event->getException()), $this->excludedExceptions))
             return;
 
         // Connect to GitLab's API

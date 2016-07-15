@@ -42,10 +42,15 @@ your instance's if necessary, but don't miss the `/profile` part), then "Persona
             gitlab_api_url: https://gitlab.com/api/v3/
             gitlab_token: (put your token here)
             project: your_project_name
+            excluded_exceptions:
+                - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
 
     > Note: if you're using https://gitlab.com, you can actually skip the `gitlab_api_url`. If not, don't forget the /api/v3/ part.
 
 5. Deploy your app in production, and trigger an exception. An issue should be waiting for you in your GitLab repository.
+
+6. *(optional)* Customize the `excluded_exceptions` node to include/exclude exceptions from being handled by this bundle.
+By default (if the `excluded_exceptions` isn't specified), all exceptions are handled.
 
 ## Configuration
 Here are some more things you can configure. Just add these items to your `config.yml`, under the `sym_exc_2_gtlb_isu_bndle`
@@ -57,16 +62,21 @@ node.
      
      > Tip: include back the dev environment (`excluded_environments: []`) to test this bundle without deploying to prod!
 
+- `excluded_exceptions` - array, default `[]`:
+
+    Array of FQCN (fully qualified class name) of exceptions to ignore.
+    
+    > Tip: add `Symfony\Component\HttpKernel\Exception\NotFoundHttpException` to ignore 404 exceptions.
+
 - `mentions` - array, default `[]`:
 
     GitLab users to be mentioned in the issue body. Example: `['user1', 'user2', 'user3']` will append "Mentions: @user1 @user2 @user3"
-    at the end of the issue body.
+    at the end of the message.
 
 ## TODO
 - Make more things configurable:
    - Issue body template
    - Comment datetime format?
-   - Exclude some exceptions (404, ...)
 - Handle pagination when finding issue
 - Test mode
 - Help diagnose problems (monolog logging)
