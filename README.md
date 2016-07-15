@@ -1,6 +1,8 @@
 # SymfonyExceptions2GitLabIssuesBundle
 *That's a very long name, but at least we know what it does.*
 
+[![Latest Stable Version](https://poser.pugx.org/chteuchteu/symfony-exceptions-2-gitlab-issues-bundle/v/stable)](https://packagist.org/packages/chteuchteu/symfony-exceptions-2-gitlab-issues-bundle)
+
 Once installed, this bundle will open/update an issue on your GitLab repository
 when an exception is thrown:
 
