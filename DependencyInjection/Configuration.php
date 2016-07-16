@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('excluded_environments')
                     ->prototype('scalar')->end()
-                    ->defaultValue(['dev'])
+                    ->defaultValue(['dev', 'test'])
                 ->end()
                 ->arrayNode('excluded_exceptions')
                     ->prototype('scalar')->end()
