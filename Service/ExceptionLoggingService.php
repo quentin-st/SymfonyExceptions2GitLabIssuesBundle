@@ -85,12 +85,14 @@ class ExceptionLoggingService
 
     public function logException(GetResponseForExceptionEvent $event)
     {
+        $exceptionInfos = $this->getExceptionInformation($event);
+
         // Handle excluded environments
         if (in_array($this->env, $this->excludedEnvironments))
             return;
 
         // Handle excluded exceptions
-        if (in_array(get_class($event->getException()), $this->excludedExceptions))
+        if (in_array($exceptionInfos['class'], $this->excludedExceptions))
             return;
 
         // Connect to GitLab's API
@@ -105,8 +107,6 @@ class ExceptionLoggingService
 
         if ($project === null)
             return;
-
-        $exceptionInfos = $this->getExceptionInformation($event);
 
         $issue = $this->findIssue($exceptionInfos['title'], $project);
         if (!$issue) {
@@ -229,7 +229,8 @@ class ExceptionLoggingService
             'user' => $user,
             'request' => $request,
             'message' => $exception->getMessage(),
-            'stacktrace' => $exception->getTraceAsString()
+            'stacktrace' => $exception->getTraceAsString(),
+            'class' => get_class($exception)
         ];
     }
 }
