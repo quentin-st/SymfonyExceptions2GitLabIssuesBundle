@@ -58,6 +58,10 @@ By default (if the `excluded_exceptions` isn't specified), all exceptions are ha
 Here are some more things you can configure. Just add these items to your `config.yml`, under the `sym_exc_2_gtlb_isu_bndle`
 node.
 
+- `reopen_closed_issues` - boolean, default `true`:
+
+    When set to `true`, any closed issue will be reopened when a matching exception is caught.
+
 - `excluded_environments` - array, default `['dev', 'test']`:
 
     When encountering an exception in one of these environments, we won't report anything to your GitLab repository.

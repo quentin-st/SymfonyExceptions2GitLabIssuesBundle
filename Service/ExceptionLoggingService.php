@@ -34,6 +34,9 @@ class ExceptionLoggingService
      */
     private $project;
 
+    /** @var bool */
+    private $reopenClosedIssues;
+
     /** @var array */
     private $excludedEnvironments;
 
@@ -61,7 +64,8 @@ class ExceptionLoggingService
      * GitLabHandler constructor.
      * @param string $gitlabAPIUrl GitLab's API URL
      * @param int $token GitLab API token
-     * @param bool $project GitLab repository name or id
+     * @param string $project GitLab repository name or id
+     * @param bool $reopenClosedIssues
      * @param array $excludedEnvironments
      * @param array $excludedExceptions
      * @param array $mentions
@@ -69,12 +73,13 @@ class ExceptionLoggingService
      * @param \Twig_Environment $twig
      * @param string $env
      */
-    public function __construct($gitlabAPIUrl, $token, $project, $excludedEnvironments, $excludedExceptions, $mentions,
+    public function __construct($gitlabAPIUrl, $token, $project, $reopenClosedIssues, $excludedEnvironments, $excludedExceptions, $mentions,
                                 $tokenStorage, \Twig_Environment $twig, $env)
     {
         $this->gitLabAPIUrl = $gitlabAPIUrl;
         $this->token = $token;
         $this->project = $project;
+        $this->reopenClosedIssues = $reopenClosedIssues;
         $this->excludedEnvironments = $excludedEnvironments;
         $this->excludedExceptions = $excludedExceptions;
         $this->mentions = $mentions;
@@ -125,7 +130,7 @@ class ExceptionLoggingService
             ];
 
             // Reopen issue if it was closed
-            if ($issue['state'] != 'opened')
+            if ($issue['state'] != 'opened' && $this->reopenClosedIssues)
                 $params['state_event'] = 'reopen';
 
             $issuesApi->update($project['id'], $issue['id'], $params);

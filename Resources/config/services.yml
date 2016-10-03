@@ -5,6 +5,7 @@ services:
             gitLabAPIUrl: "%sym_exc_2_gtlb_isu_bndle.gitlab_api_url%"
             token: "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
             project: "%sym_exc_2_gtlb_isu_bndle.project%"
+            reopenClosedIssues: "%sym_exc_2_gtlb_isu_bndle.reopen_closed_issues%"
             excludedEnvironments: "%sym_exc_2_gtlb_isu_bndle.excluded_environments%"
             excludedExceptions: "%sym_exc_2_gtlb_isu_bndle.excluded_exceptions%"
             mentions: "%sym_exc_2_gtlb_isu_bndle.mentions%"
