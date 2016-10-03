@@ -135,21 +135,20 @@ class ExceptionLoggingService
 
             $issuesApi->update($project['id'], $issue['id'], $params);
 
-            // Update special comment it if exists (or create it)
-            $foundComment = false;
+            // Delete special comment it if exists, then (re-)create it
+            $count = 1;
             foreach ($issuesApi->showComments($project['id'], $issue['id']) as $comment) {
                 if (preg_match(self::CommentRegex, $comment['body'], $matches, PREG_OFFSET_CAPTURE)) {
-                    // Found comment, update it
-                    $issuesApi->updateComment($project['id'], $issue['id'], $comment['id'], $this->getCommentBody(intval($matches[1][0]) + 1));
-                    $foundComment = true;
+                    // Use the count in comment's body
+                    $count = intval($matches[1][0]) + 1;
+
+                    // Delete comment
+                    $issuesApi->deleteComment($project['id'], $issue['id'], $comment['id']);
                     break;
                 }
             }
 
-            if (!$foundComment) {
-                // Could not find comment, let's create it back
-                $issuesApi->addComment($project['id'], $issue['id'], $this->getCommentBody());
-            }
+            $issuesApi->addComment($project['id'], $issue['id'], $this->getCommentBody($count));
         }
     }
 
