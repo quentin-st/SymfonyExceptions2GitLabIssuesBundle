@@ -14,7 +14,7 @@ class ExceptionLoggingService
     const CommentPattern = "Thrown {count} time{plural}, last one was {datetime}";
     const CommentRegex = "/^Thrown (\\d*) times?, last one was (.*)$/";
     const UnknownLoggedInUser = "None";
-    const IssueTitleMaxLength = 256;
+    const IssueTitleMaxLength = 255;
 
     /**
      * GitLab's API URL, defaults to hosted
@@ -160,7 +160,7 @@ class ExceptionLoggingService
     }
 
     /**
-     * GitLab issues titles are limited to 256 chars, let's truncate it if necessary
+     * GitLab issues titles are limited to 255 chars, let's truncate it if necessary
      * @param array $exceptionInfos
      * @return string
      */
