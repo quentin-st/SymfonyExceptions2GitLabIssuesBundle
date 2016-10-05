@@ -138,12 +138,13 @@ class ExceptionLoggingService
             // Delete special comment it if exists, then (re-)create it
             $count = 1;
             foreach ($issuesApi->showComments($project['id'], $issue['id']) as $comment) {
+                // Find the comment by testing its body against CommentRegex
                 if (preg_match(self::CommentRegex, $comment['body'], $matches, PREG_OFFSET_CAPTURE)) {
                     // Use the count in comment's body
                     $count = intval($matches[1][0]) + 1;
 
                     // Delete comment
-                    $issuesApi->deleteComment($project['id'], $issue['id'], $comment['id']);
+                    $issuesApi->removeComment($project['id'], $issue['id'], $comment['id']);
                     break;
                 }
             }
