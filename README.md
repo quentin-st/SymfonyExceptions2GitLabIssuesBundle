@@ -17,18 +17,22 @@ when an exception is thrown:
 
 1. Add this bundle to your project:
 
-        composer require chteuchteu/symfony-exceptions-2-gitlab-issues-bundle
+    ```bash
+    composer require chteuchteu/symfony-exceptions-2-gitlab-issues-bundle
+    ```
 
 2. Register this bundle in symfony's kernel:
 
-        // app/AppKernel.php
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                new Chteuchteu\SymExc2GtlbIsuBndle\SymfonyExceptions2GitLabIssuesBundle(),
-            );
-        }
+    ```php
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new Chteuchteu\SymExc2GtlbIsuBndle\SymfonyExceptions2GitLabIssuesBundle(),
+        );
+    }
+    ```
 
 3. Generate a GitLab API token. Navigate to [https://gitlab.com/profile](https://gitlab.com/profile) (replace the URL with
 your instance's if necessary, but don't miss the `/profile` part), then "Personal Access Tokens".
@@ -39,13 +43,15 @@ your instance's if necessary, but don't miss the `/profile` part), then "Persona
 
 4. Configure this bundle inside your project:
 
-        # config.yml
-        sym_exc_2_gtlb_isu_bndle:
-            gitlab_api_url: https://gitlab.com/api/v3/
-            gitlab_token: (put your token here)
-            project: your_project_name
-            excluded_exceptions:
-                - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+    ```yml
+    # config.yml
+    sym_exc_2_gtlb_isu_bndle:
+        gitlab_api_url: https://gitlab.com/api/v3/
+        gitlab_token: (put your token here)
+        project: your_project_name
+        excluded_exceptions:
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+    ```
 
     > Note: if you're using https://gitlab.com, you can actually skip the `gitlab_api_url`. If not, don't forget the /api/v3/ part.
 
