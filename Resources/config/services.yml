@@ -2,15 +2,15 @@ services:
     sym_exc_2_gtlb_isu_bndle.exc_logr:
         class: Chteuchteu\SymExc2GtlbIsuBndle\Service\ExceptionLoggingService
         arguments:
-            gitLabAPIUrl: "%sym_exc_2_gtlb_isu_bndle.gitlab_api_url%"
-            token: "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
-            project: "%sym_exc_2_gtlb_isu_bndle.project%"
-            reopenClosedIssues: "%sym_exc_2_gtlb_isu_bndle.reopen_closed_issues%"
-            excludedEnvironments: "%sym_exc_2_gtlb_isu_bndle.excluded_environments%"
-            excludedExceptions: "%sym_exc_2_gtlb_isu_bndle.excluded_exceptions%"
-            mentions: "%sym_exc_2_gtlb_isu_bndle.mentions%"
-            tokenStorage: "@security.token_storage"
-            twig: "@twig"
-            env: "%kernel.environment%"
+            - "%sym_exc_2_gtlb_isu_bndle.gitlab_api_url%"
+            - "%sym_exc_2_gtlb_isu_bndle.gitlab_token%"
+            - "%sym_exc_2_gtlb_isu_bndle.project%"
+            - "%sym_exc_2_gtlb_isu_bndle.reopen_closed_issues%"
+            - "%sym_exc_2_gtlb_isu_bndle.excluded_environments%"
+            - "%sym_exc_2_gtlb_isu_bndle.excluded_exceptions%"
+            - "%sym_exc_2_gtlb_isu_bndle.mentions%"
+            - "@security.token_storage"
+            - "@twig"
+            - "%kernel.environment%"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: logException, priority: 200 }
