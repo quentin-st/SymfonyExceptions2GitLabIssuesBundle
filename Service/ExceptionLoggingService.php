@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ExceptionLoggingService
 {
-    const CommentPattern = "Thrown {count} time{plural}, last one was {datetime}";
-    const CommentRegex = "/^Thrown (\\d*) times?, last one was (.*)$/";
-    const UnknownLoggedInUser = "None";
+    const CommentPattern = 'Thrown {count} time{plural}, last one was {datetime}';
+    const CommentRegex = '/^Thrown (\\d*) times?, last one was (.*)$/';
+    const UnknownLoggedInUser = 'None';
     const IssueTitleMaxLength = 255;
 
     /**
@@ -46,7 +46,6 @@ class ExceptionLoggingService
     /** @var array */
     private $mentions;
 
-
     /** @var TokenStorage */
     private $tokenStorage;
 
@@ -56,22 +55,21 @@ class ExceptionLoggingService
     /** @var string */
     private $env;
 
-
     /** @var Client */
     private $gitLab;
 
     /**
      * GitLabHandler constructor.
-     * @param string $gitlabAPIUrl GitLab's API URL
-     * @param int $token GitLab API token
-     * @param string $project GitLab repository name or id
-     * @param bool $reopenClosedIssues
-     * @param array $excludedEnvironments
-     * @param array $excludedExceptions
-     * @param array $mentions
-     * @param TokenStorage $tokenStorage
+     * @param string            $gitlabAPIUrl         GitLab's API URL
+     * @param int               $token                GitLab API token
+     * @param string            $project              GitLab repository name or id
+     * @param bool              $reopenClosedIssues
+     * @param array             $excludedEnvironments
+     * @param array             $excludedExceptions
+     * @param array             $mentions
+     * @param TokenStorage      $tokenStorage
      * @param \Twig_Environment $twig
-     * @param string $env
+     * @param string            $env
      */
     public function __construct($gitlabAPIUrl, $token, $project, $reopenClosedIssues, $excludedEnvironments, $excludedExceptions, $mentions,
                                 $tokenStorage, \Twig_Environment $twig, $env)
@@ -93,12 +91,14 @@ class ExceptionLoggingService
         $exceptionInfos = $this->getExceptionInformation($event);
 
         // Handle excluded environments
-        if (in_array($this->env, $this->excludedEnvironments))
+        if (in_array($this->env, $this->excludedEnvironments)) {
             return;
+        }
 
         // Handle excluded exceptions
-        if (in_array($exceptionInfos['class'], $this->excludedExceptions))
+        if (in_array($exceptionInfos['class'], $this->excludedExceptions)) {
             return;
+        }
 
         // Connect to GitLab's API
         $this->gitLab = new Client($this->gitLabAPIUrl);
@@ -110,8 +110,9 @@ class ExceptionLoggingService
         // Find project
         $project = $this->findProject();
 
-        if ($project === null)
+        if ($project === null) {
             return;
+        }
 
         $issue = $this->findIssue($exceptionInfos['title'], $project);
         if (!$issue) {
@@ -130,8 +131,9 @@ class ExceptionLoggingService
             ];
 
             // Reopen issue if it was closed
-            if ($issue['state'] != 'opened' && $this->reopenClosedIssues)
+            if ($issue['state'] != 'opened' && $this->reopenClosedIssues) {
                 $params['state_event'] = 'reopen';
+            }
 
             $issuesApi->update($project['id'], $issue['id'], $params);
 
@@ -141,7 +143,7 @@ class ExceptionLoggingService
                 // Find the comment by testing its body against CommentRegex
                 if (preg_match(self::CommentRegex, $comment['body'], $matches, PREG_OFFSET_CAPTURE)) {
                     // Use the count in comment's body
-                    $count = intval($matches[1][0]) + 1;
+                    $count = (int) ($matches[1][0]) + 1;
 
                     // Delete comment
                     $issuesApi->removeComment($project['id'], $issue['id'], $comment['id']);
@@ -153,7 +155,7 @@ class ExceptionLoggingService
         }
     }
 
-    private function getCommentBody($count=1)
+    private function getCommentBody($count = 1)
     {
         $replacements = [
             '/{count}/' => $count,
@@ -166,15 +168,16 @@ class ExceptionLoggingService
 
     /**
      * GitLab issues titles are limited to 255 chars, let's truncate it if necessary
-     * @param array $exceptionInfos
+     * @param  array  $exceptionInfos
      * @return string
      */
     private function getIssueTitle(array $exceptionInfos)
     {
         $title = $exceptionInfos['title'];
 
-        if (strlen($title) > self::IssueTitleMaxLength)
-            return substr($title, 0, self::IssueTitleMaxLength-3) . '...';
+        if (strlen($title) > self::IssueTitleMaxLength) {
+            return substr($title, 0, self::IssueTitleMaxLength - 3).'...';
+        }
 
         return $title;
     }
@@ -203,7 +206,7 @@ class ExceptionLoggingService
      * Try to find an issue with this $title
      * TODO handle pagination
      * @param $title
-     * @param array $project
+     * @param  array      $project
      * @return Issue|null
      */
     private function findIssue($title, array $project)
@@ -211,10 +214,10 @@ class ExceptionLoggingService
         /** @var Issues $issuesApi */
         $issuesApi = $this->gitLab->api('issues');
 
-        foreach ($issuesApi->all($project['id']) as $issue)
-        {
-            if ($issue['title'] == $title)
+        foreach ($issuesApi->all($project['id']) as $issue) {
+            if ($issue['title'] == $title) {
                 return $issue;
+            }
         }
         return null;
     }
@@ -228,7 +231,7 @@ class ExceptionLoggingService
         $line = $exception->getLine();
 
         return [
-            'title' => 'Exception in ' . $file . ' on line ' . $line . ': ' . $exception->getMessage(),
+            'title' => 'Exception in '.$file.' on line '.$line.': '.$exception->getMessage(),
             'file' => $file,
             'line' => $line,
             'user' => $user,

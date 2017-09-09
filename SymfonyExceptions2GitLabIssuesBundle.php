@@ -11,8 +11,9 @@ class SymfonyExceptions2GitLabIssuesBundle extends Bundle
 
     public function getContainerExtension()
     {
-        if ($this->extension === null)
+        if ($this->extension === null) {
             $this->extension = new SymfonyExceptions2GitLabIssuesExtension();
+        }
 
         return $this->extension;
     }
