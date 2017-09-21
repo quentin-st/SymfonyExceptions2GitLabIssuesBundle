@@ -81,6 +81,7 @@ class ExceptionLoggingService
         $this->excludedEnvironments = $excludedEnvironments;
         $this->excludedExceptions = $excludedExceptions;
         $this->mentions = $mentions;
+        $this->tokenStorage = $tokenStorage;
 
         $this->twig = $twig;
         $this->env = $env;
