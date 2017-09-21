@@ -227,7 +227,18 @@ class ExceptionLoggingService
     {
         $request = $event->getRequest();
         $exception = $event->getException();
-        $user = $this->tokenStorage != null ? $this->tokenStorage->getToken()->getUsername() : self::UnknownLoggedInUser;
+        $storage = $this->tokenStorage;
+
+        $user = self::UnknownLoggedInUser;
+        if ($storage !== null)
+        {
+            $token = $storage->getToken();
+            if ($token !== null)
+            {
+                $user = $token->getUsername();
+            }
+        }
+
         $file = substr($exception->getFile(), strpos($exception->getFile(), 'src/') ?: 0);
         $line = $exception->getLine();
 
