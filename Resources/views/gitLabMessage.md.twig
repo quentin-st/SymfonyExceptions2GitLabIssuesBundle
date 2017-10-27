@@ -8,7 +8,7 @@
 Logged-in user: {{ user }}
 {% endif %}
 
-Exception in *[{{ file ~ '#' ~ line }}]({{ file ~ '#' ~ line }})*.
+Exception in *[{{ file ~ '#' ~ line }}]({{ file ~ '#L' ~ line ~ '-' ~ line }})*.
 
 > {{ class }}
 > {{ message }}
