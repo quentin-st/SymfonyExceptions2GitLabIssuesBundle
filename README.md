@@ -15,6 +15,13 @@ when an exception is thrown:
 
 ## Installation
 
+Depending on your GitLab server version, you must choose the right version of this bundle:
+
+|Version|Gitlab API Version|Gitlab Version|
+|-------|------------------|--------------|
+|2.x    | V4               | >= 9.0       |
+|1.x    | V3               | < 9.5        |
+
 1. Add this bundle to your project:
 
     ```bash
@@ -38,7 +45,7 @@ when an exception is thrown:
 your instance's if necessary, but don't miss the `/profile` part), then "Personal Access Tokens".
 
     You can name it whatever you want, but "SymfonyExceptions2GitLabIssuesBundle" seems to be a great name.
-    
+
     > Note: you can share this token between several projects.
 
 4. Configure this bundle inside your project:
@@ -46,14 +53,14 @@ your instance's if necessary, but don't miss the `/profile` part), then "Persona
     ```yml
     # config.yml
     sym_exc_2_gtlb_isu_bndle:
-        gitlab_api_url: https://gitlab.com/api/v3/
+        gitlab_api_url: https://gitlab.com/api/v4/
         gitlab_token: (put your token here)
         project: your_project_name
         excluded_exceptions:
             - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
     ```
 
-    > Note: if you're using https://gitlab.com, you can actually skip the `gitlab_api_url`. If not, don't forget the /api/v3/ part.
+    > Note: if you're using https://gitlab.com, you can actually skip the `gitlab_api_url`. If not, don't forget the /api/v4/ part.
 
 5. Deploy your app in production, and trigger an exception. An issue should be waiting for you in your GitLab repository.
 
@@ -71,13 +78,13 @@ node.
 - `excluded_environments` - array, default `['dev', 'test']`:
 
     When encountering an exception in one of these environments, we won't report anything to your GitLab repository.
-     
+
      > Tip: include back the dev environment (`excluded_environments: []`) to test this bundle without deploying to prod!
 
 - `excluded_exceptions` - array, default `[]`:
 
     Array of FQCN (fully qualified class name) of exceptions to ignore.
-    
+
     > Tip: add `Symfony\Component\HttpKernel\Exception\NotFoundHttpException` to ignore 404 exceptions.
 
 - `mentions` - array, default `[]`:

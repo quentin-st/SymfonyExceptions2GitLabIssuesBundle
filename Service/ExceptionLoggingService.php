@@ -101,7 +101,7 @@ class ExceptionLoggingService
         }
 
         // Connect to GitLab's API
-        $this->gitLab = new Client($this->gitLabAPIUrl);
+        $this->gitLab = Client::create($this->gitLabAPIUrl);
         $this->gitLab->authenticate($this->token, Client::AUTH_URL_TOKEN);
 
         /** @var Issues $issuesApi */
@@ -198,7 +198,10 @@ class ExceptionLoggingService
         /** @var Projects $projectsApi */
         $projectsApi = $this->gitLab->api('projects');
 
-        $projects = $projectsApi->search($this->project);
+        $projects = $projectsApi->all([
+            'search' => $this->project,
+        ]);
+
         return count($projects) > 0 ? $projects[0] : null;
     }
 

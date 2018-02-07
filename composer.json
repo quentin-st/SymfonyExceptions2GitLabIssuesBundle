@@ -15,7 +15,8 @@
     "require": {
         "php": "^5.4|^7.0",
         "symfony/symfony": ">=2.1.0",
-        "m4tthumphrey/php-gitlab-api": "^7.15"
+        "m4tthumphrey/php-gitlab-api": "^9.2",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "autoload": {
         "psr-4": {

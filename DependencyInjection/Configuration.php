@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('gitlab_api_url')
-                    ->defaultValue('https://gitlab.com/api/v3/')
+                    ->defaultValue('https://gitlab.com/api/v4/')
                 ->end()
                 ->scalarNode('gitlab_token')
                     ->isRequired()
