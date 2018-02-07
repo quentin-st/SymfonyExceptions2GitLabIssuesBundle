@@ -2,7 +2,7 @@
     "name": "chteuchteu/symfony-exceptions-2-gitlab-issues-bundle",
     "description": "Creates & updates issues on a GitLab repository from Symfony2 exceptions",
     "homepage": "https://github.com/chteuchteu/SymfonyExceptions2GitLabIssuesBundle",
-    "license": "GNU GPL v2.0",
+    "license": "GPL-2.0-only",
     "authors": [
         {
             "name": "Quentin Stoeckel",
